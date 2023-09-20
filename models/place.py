@@ -6,9 +6,6 @@ from sqlalchemy import Float, Table
 from sqlalchemy.orm import relationship
 import models
 from models.base_model import BaseModel, Base
-from models.city import City
-from models.amenity import Amenity
-from models.review import Review
 from os import getenv
 
 
