@@ -9,7 +9,7 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 import shlex
-
+from models.place import place_amenity
 
 class FileStorage:
     """This class serializes instances to a JSON file and
