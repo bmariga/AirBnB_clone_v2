@@ -19,16 +19,16 @@ class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) ' if sys.__stdin__.isatty() else ''
 
     classes = {
-        'BaseModel': BaseModel, 'User': User, 'Place': Place,
-        'State': State, 'City': City, 'Amenity': Amenity,
-        'Review': Review
-    }
+               'BaseModel': BaseModel, 'User': User, 'Place': Place,
+               'State': State, 'City': City, 'Amenity': Amenity,
+               'Review': Review
+              }
     dot_cmds = ['all', 'count', 'show', 'destroy', 'update']
     types = {
-        'number_rooms': int, 'number_bathrooms': int,
-        'max_guest': int, 'price_by_night': int,
-        'latitude': float, 'longitude': float
-    }
+             'number_rooms': int, 'number_bathrooms': int,
+             'max_guest': int, 'price_by_night': int,
+             'latitude': float, 'longitude': float
+            }
 
     def preloop(self):
         """Prints if isatty is false"""
@@ -113,49 +113,18 @@ class HBNBCommand(cmd.Cmd):
         """ Overrides the emptyline method of CMD """
         pass
 
-    def check_value_type(self, value):
-        """checks the type of value"""
-        arg = ""
-        if value[0] == '"' and value[-1] == '"':
-
-            for i in range(1, len(value) - 1):
-                if value[i] == "_":
-                    arg += " "
-                    continue
-                arg += value[i]
-            return arg
-        elif value.find(".") != -1:
-            return float(value)
-        else:
-            return int(value)
-
     def do_create(self, args):
         """ Create an object of any class"""
-        arg = args.split()
         if not args:
             print("** class name missing **")
             return
-        elif arg[0] not in HBNBCommand.classes:
+        elif args not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-
-        new_instance = eval(arg[0])()
-        print(arg[0])
-        arg.pop(0)
-        for item in arg:
-            item = item.split('=')
-            if len(item) != 2:
-                continue
-            key = item[0]
-            value = item[1]
-            value = self.check_value_type(value)
-            if value is None:
-                continue
-            else:
-                setattr(new_instance, key, value)
-        storage.new(new_instance)
+        new_instance = HBNBCommand.classes[args]()
         storage.save()
         print(new_instance.id)
+        storage.save()
 
     def help_create(self):
         """ Help information for the create method """
@@ -218,7 +187,7 @@ class HBNBCommand(cmd.Cmd):
         key = c_name + "." + c_id
 
         try:
-            del (storage.all()[key])
+            del(storage.all()[key])
             storage.save()
         except KeyError:
             print("** no instance found **")
@@ -237,11 +206,13 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage.all(HBNBCommand.classes[args]).items():
-                print_list.append(str(v))
+            for k, v in storage._FileStorage__objects.items():
+                if k.split('.')[0] == args:
+                    print_list.append(str(v))
         else:
-            for k, v in storage.all().items():
+            for k, v in storage._FileStorage__objects.items():
                 print_list.append(str(v))
+
         print(print_list)
 
     def help_all(self):
@@ -301,7 +272,7 @@ class HBNBCommand(cmd.Cmd):
                 args.append(v)
         else:  # isolate args
             args = args[2]
-            if args and args[0] == '\"':  # check for quoted arg
+            if args and args[0] is '\"':  # check for quoted arg
                 second_quote = args.find('\"', 1)
                 att_name = args[1:second_quote]
                 args = args[second_quote + 1:]
@@ -309,10 +280,10 @@ class HBNBCommand(cmd.Cmd):
             args = args.partition(' ')
 
             # if att_name was not quoted arg
-            if not att_name and args[0] != ' ':
+            if not att_name and args[0] is not ' ':
                 att_name = args[0]
             # check for quoted val arg
-            if args[2] and args[2][0] == '\"':
+            if args[2] and args[2][0] is '\"':
                 att_val = args[2][1:args[2].find('\"', 1)]
 
             # if att_val was not quoted arg
@@ -348,7 +319,6 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
-
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
