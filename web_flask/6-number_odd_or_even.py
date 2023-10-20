@@ -45,11 +45,17 @@ def hello_html(n):
     """ Sixth Route that display HTML """
     return render_template('5-number.html', n=n)
 
-@app.route('/number_odd_or_even/<n>', strict_slashes=False)
+@app.route('/number_odd_or_even/<int:n>', strict_slashes=False)
 def number_odd_or_even(n):
-    """ Seventh Route that display is n even or odd HTML """ 
-    if type(n) == int:
-        return render_template('6-number_odd_or_even.html', n=n)
+    """Seventh Route that displays whether n is even or odd in HTML."""
+
+    if isinstance(n, int):
+        # Determine if odd or even
+        even_or_odd = "even" if n % 2 == 0 else "odd"
+
+        return render_template('6-number_odd_or_even.html', n=n, even_or_odd=even_or_odd)
+    else:
+        return "Invalid input. Please provide an integer."
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
