@@ -2,7 +2,7 @@
 """
 Script that starts a Flask web application:
 listening on 0.0.0.0, port 5000
-with Fifth routes
+with Six routes
 """
 from flask import Flask
 from flask import render_template
@@ -42,7 +42,7 @@ def hello_number(n):
 
 @app.route('/number_template/<int:n>', strict_slashes=False)
 def hello_html(n):
-    """ Route that display HTML """
+    """ Sixth Route that display HTML """
     return render_template('5-number.html', n=n)
 
 
