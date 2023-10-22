@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<HTML LANG="en">
+  <HEAD>
+    <META CHARSET="utf-8">
+    <LINK REL="STYLESHEET" HREF="styles/4-common.css">
+    <LINK REL="STYLESHEET" HREF="styles/3-header.css">
+    <LINK REL="STYLESHEET" HREF="styles/3-footer.css">
+    <LINK REL="STYLESHEET" HREF="styles/6-filters.css">
+    <LINK REL="ICON" HREF="images/icon.png" TYPE="image/png">
+    <TITLE>AirBnb Clone</TITLE>
+  </HEAD>
+  <BODY>
+    <HEADER>
+      <DIV CLASS="logo">
+      </DIV>
+    </HEADER>
+    <DIV CLASS="container">
+      <SECTION CLASS="filters">
+        <DIV CLASS="locations">
+          <H3>states</H3>
+          <H4>&nbsp;</H4>
+          <UL CLASS="popover">
+	    {% FOR STATE IN STATES|SORT(ATTRIBUTE='NAME') %}
+              <LI>
+                <H2>{{ state.name|lower }}:</H2>
+                <UL>
+		  {% FOR CITY IN STATE.CITIES|SORT(ATTRIBUTE='NAME') %}
+                    <LI>{{ city.name|lower }}</LI>
+		  {% ENDFOR %}
+                </UL>
+              </LI>
+	    {% ENDFOR %}
+          </UL>
+        </DIV>
+        <DIV CLASS="amenities">
+          <H3>amenities</H3>
+          <H4>&nbsp;</H4>
+          <UL CLASS="popover">
+	    {% FOR AMENITY IN AMENITIES|SORT(ATTRIBUTE='NAME') %}
+              <LI>{{ amenity.name|lower }}</LI>
+	    {% ENDFOR %}
+          </UL>
+        </DIV>
+        <BUTTON>
+          search
+        </BUTTON>
+      </SECTION>
+    </DIV>
+    <FOOTER>
+      <P>
+        holberton school
+      </P>
+    </FOOTER>
+
