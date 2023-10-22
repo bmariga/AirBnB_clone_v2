@@ -22,6 +22,7 @@ article {
 
 	border: 1px solid #FF5A5F;
 	border-radius: 4px;
+	position: relative;
 }
 
 .headline {
@@ -36,8 +37,8 @@ article {
 .price_by_night {
 	display: flex;
 	justify-content: center;
-	align-self: flex-end;
-
+	align-self: flex-start;
+	top: 0;
 	position: absolute;
 	right: 0;
 
