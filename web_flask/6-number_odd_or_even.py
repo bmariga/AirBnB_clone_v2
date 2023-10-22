@@ -49,13 +49,13 @@ def hello_html(n):
 def number_odd_or_even(n):
     """Seventh Route that displays whether n is even or odd in HTML."""
 
-    if isinstance(n, int):
-        # Determine if odd or even
-        even_or_odd = "even" if n % 2 == 0 else "odd"
-
-        return render_template('6-number_odd_or_even.html', n=n, even_or_odd=even_or_odd)
+    
+    if n % 2 == 0:
+        is_it_even = 'even'
     else:
-        return "Invalid input. Please provide an integer."
+        is_it_even = 'odd'
+    return render_template('6-number_odd_or_even.html', n=n,
+                           is_it_even=is_it_even)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
